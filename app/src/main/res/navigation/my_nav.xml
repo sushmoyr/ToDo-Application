@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.sushmoyr.todoapplication.fragments.list.ListFragment"
-        android:label="fragment_list"
+        android:label="ToDo"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment2_to_addFragment"
@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/addFragment"
         android:name="com.sushmoyr.todoapplication.fragments.add.AddFragment"
-        android:label="fragment_add"
+        android:label="Add"
         tools:layout="@layout/fragment_add" >
         <action
             android:id="@+id/action_addFragment_to_listFragment2"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/updateFragment"
         android:name="com.sushmoyr.todoapplication.fragments.update.UpdateFragment"
-        android:label="fragment_update"
+        android:label="Update"
         tools:layout="@layout/fragment_update" >
         <action
             android:id="@+id/action_updateFragment_to_listFragment2"
