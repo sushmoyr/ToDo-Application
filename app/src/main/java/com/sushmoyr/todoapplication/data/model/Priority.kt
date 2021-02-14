@@ -1,4 +1,4 @@
-package com.sushmoyr.todoapplication.data
+package com.sushmoyr.todoapplication.data.model
 
 enum class Priority {
     HIGH,

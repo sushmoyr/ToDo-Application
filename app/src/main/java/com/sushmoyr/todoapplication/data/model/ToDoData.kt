@@ -1,4 +1,4 @@
-package com.sushmoyr.todoapplication.data
+package com.sushmoyr.todoapplication.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

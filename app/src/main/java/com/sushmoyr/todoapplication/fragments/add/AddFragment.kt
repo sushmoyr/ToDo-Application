@@ -10,8 +10,8 @@ import com.sushmoyr.todoapplication.R
 class AddFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
 
@@ -25,7 +25,7 @@ class AddFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.menu_add -> findNavController().navigate(R.id.action_addFragment_to_listFragment2)
         }
         return super.onOptionsItemSelected(item)
