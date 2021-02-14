@@ -1,15 +1,18 @@
 package com.sushmoyr.todoapplication.fragments.list
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sushmoyr.todoapplication.R
 
 class ListFragment : Fragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,10 +24,14 @@ class ListFragment : Fragment() {
 
         val fab : FloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
-            findNavController().navigate(R.id.action_listFragment2_to_addFragment)
+            findNavController().navigate(R.id.action_listFragment_to_addFragment)
         }
 
         return view
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_list, menu)
     }
 
 }
