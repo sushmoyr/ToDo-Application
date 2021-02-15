@@ -1,5 +1,6 @@
 package com.sushmoyr.todoapplication.fragments.update
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -46,10 +47,27 @@ class UpdateFragment : Fragment() {
             R.id.menu_save -> {
                 updateDataInDb()
             }
+            R.id.menu_delete -> {
+                deleteItem()
+            }
         }
 
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteItem() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes"){_, _ ->
+            toDoViewModel.deleteItem(args.currentItem)
+            Toast.makeText(requireContext(), "Item Deleted", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment)
+        }
+        builder.setNegativeButton("No"){_,_->}
+        builder.setTitle("Delete?")
+        builder.setMessage("Are you sure want to '${args.currentItem.title}'?")
+        builder.show()
     }
 
     private fun updateDataInDb() {
