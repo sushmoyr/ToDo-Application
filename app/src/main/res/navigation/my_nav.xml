@@ -45,5 +45,8 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left" />
+        <argument
+            android:name="currentItem"
+            app:argType="com.sushmoyr.todoapplication.data.model.ToDoData" />
     </fragment>
 </navigation>
