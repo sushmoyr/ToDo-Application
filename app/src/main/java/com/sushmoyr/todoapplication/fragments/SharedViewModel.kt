@@ -32,7 +32,7 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            
+
         }
 
     }
