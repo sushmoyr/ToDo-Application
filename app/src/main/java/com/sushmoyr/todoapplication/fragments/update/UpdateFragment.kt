@@ -14,8 +14,6 @@ import com.sushmoyr.todoapplication.data.model.ToDoData
 import com.sushmoyr.todoapplication.data.viewmodel.ToDoViewModel
 import com.sushmoyr.todoapplication.databinding.FragmentUpdateBinding
 import com.sushmoyr.todoapplication.fragments.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_update.*
-import kotlinx.android.synthetic.main.fragment_update.view.*
 
 class UpdateFragment : Fragment() {
 
@@ -75,9 +73,9 @@ class UpdateFragment : Fragment() {
     }
 
     private fun updateDataInDb() {
-        val mTitle = current_title_et.text.toString()
-        val mSpinner = current_priorities_spinner.selectedItem.toString()
-        val mDesc = current_description_et.text.toString()
+        val mTitle = binding.currentTitleEt.text.toString()
+        val mSpinner = binding.currentPrioritiesSpinner.selectedItem.toString()
+        val mDesc = binding.currentDescriptionEt.text.toString()
 
         val validation = sharedViewModel.verifyData(mTitle, mDesc)
 
