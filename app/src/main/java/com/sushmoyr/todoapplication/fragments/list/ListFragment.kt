@@ -37,7 +37,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentListBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
@@ -46,7 +46,7 @@ class ListFragment : Fragment() {
         setupRecyclerView()
 
 
-        todoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
+        todoViewModel.getAllData.observe(viewLifecycleOwner, { data ->
             sharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
         })
