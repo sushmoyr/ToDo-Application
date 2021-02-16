@@ -28,13 +28,28 @@ class SharedViewModel(application: Application):AndroidViewModel(application) {
                                     id: Long) {
             when(position){
                 0 -> {
-                    (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.red))
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(
+                        ContextCompat.getColor(
+                            application,
+                            R.color.red
+                        )
+                    )
                 }
                 1 -> {
-                    (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.yellow))
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(
+                        ContextCompat.getColor(
+                            application,
+                            R.color.yellow
+                        )
+                    )
                 }
                 2 -> {
-                    (parent?.getChildAt(0) as TextView).setTextColor(ContextCompat.getColor(application, R.color.green))
+                    (parent?.getChildAt(0) as? TextView)?.setTextColor(
+                        ContextCompat.getColor(
+                            application,
+                            R.color.green
+                        )
+                    )
                 }
             }
         }
