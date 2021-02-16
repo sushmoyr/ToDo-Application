@@ -8,7 +8,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +17,7 @@ import com.sushmoyr.todoapplication.data.viewmodel.ToDoViewModel
 import com.sushmoyr.todoapplication.databinding.FragmentListBinding
 import com.sushmoyr.todoapplication.fragments.SharedViewModel
 import com.sushmoyr.todoapplication.fragments.list.adapter.ListAdapter
+import com.sushmoyr.todoapplication.util.hideKeyboard
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 class ListFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -46,6 +46,9 @@ class ListFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.sharedViewModel = sharedViewModel
         //setup recycler view
         setupRecyclerView()
+
+        //hide keyboard
+        hideKeyboard(requireActivity())
 
 
         todoViewModel.getAllData.observe(viewLifecycleOwner, { data ->
