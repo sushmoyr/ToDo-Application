@@ -12,6 +12,7 @@ import com.sushmoyr.todoapplication.R
 import com.sushmoyr.todoapplication.data.model.Priority
 import com.sushmoyr.todoapplication.data.model.ToDoData
 import com.sushmoyr.todoapplication.data.viewmodel.ToDoViewModel
+import com.sushmoyr.todoapplication.databinding.FragmentUpdateBinding
 import com.sushmoyr.todoapplication.fragments.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_update.*
 import kotlinx.android.synthetic.main.fragment_update.view.*
@@ -22,20 +23,23 @@ class UpdateFragment : Fragment() {
     private val toDoViewModel: ToDoViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by viewModels()
 
+    private var _binding: FragmentUpdateBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_update, container, false)
+        // Data binding
+        _binding = FragmentUpdateBinding.inflate(inflater, container, false)
+
         setHasOptionsMenu(true)
 
-        view.current_title_et.setText(args.currentItem.title)
-        view.current_description_et.setText(args.currentItem.description)
-        view.current_priorities_spinner.setSelection(parsePriority(args.currentItem.priority))
-        view.current_priorities_spinner.onItemSelectedListener = sharedViewModel.listener
+        binding.args = args
 
-        return view
+        binding.currentPrioritiesSpinner.onItemSelectedListener = sharedViewModel.listener
+
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -43,7 +47,7 @@ class UpdateFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
+        when (item.itemId) {
             R.id.menu_save -> {
                 updateDataInDb()
             }
@@ -59,12 +63,12 @@ class UpdateFragment : Fragment() {
     private fun deleteItem() {
 
         val builder = AlertDialog.Builder(requireContext())
-        builder.setPositiveButton("Yes"){_, _ ->
+        builder.setPositiveButton("Yes") { _, _ ->
             toDoViewModel.deleteItem(args.currentItem)
             Toast.makeText(requireContext(), "Item Deleted", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
         }
-        builder.setNegativeButton("No"){_,_->}
+        builder.setNegativeButton("No") { _, _ -> }
         builder.setTitle("Delete?")
         builder.setMessage("Are you sure want to '${args.currentItem.title}'?")
         builder.show()
@@ -77,17 +81,18 @@ class UpdateFragment : Fragment() {
 
         val validation = sharedViewModel.verifyData(mTitle, mDesc)
 
-        if(validation){
-            val toDoData = ToDoData(args.currentItem.id,
+        if (validation) {
+            val toDoData = ToDoData(
+                args.currentItem.id,
                 mTitle,
                 sharedViewModel.parsePriority(mSpinner),
-                mDesc)
+                mDesc
+            )
 
             toDoViewModel.updateData(toDoData)
             Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment)
-        }
-        else{
+        } else {
             Toast.makeText(requireContext(), "Please Fill All", Toast.LENGTH_SHORT).show()
         }
     }
@@ -99,6 +104,11 @@ class UpdateFragment : Fragment() {
             Priority.MEDIUM -> 1
             Priority.LOW -> 2
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
