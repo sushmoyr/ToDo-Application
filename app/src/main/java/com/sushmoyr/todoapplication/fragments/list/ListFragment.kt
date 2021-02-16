@@ -7,13 +7,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.sushmoyr.todoapplication.R
+import com.sushmoyr.todoapplication.data.model.ToDoData
 import com.sushmoyr.todoapplication.data.viewmodel.ToDoViewModel
 import com.sushmoyr.todoapplication.databinding.FragmentListBinding
-import com.sushmoyr.todoapplication.fragments.ListAdapter
+import com.sushmoyr.todoapplication.fragments.list.adapter.ListAdapter
 import com.sushmoyr.todoapplication.fragments.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_list.*
 
 class ListFragment : Fragment() {
 
@@ -55,6 +58,36 @@ class ListFragment : Fragment() {
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        swipeToDelete(recyclerView)
+    }
+
+    private fun swipeToDelete(recyclerView: RecyclerView){
+        val swipeToDeleteCallback = object : SwipeToDelete(){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val deletedItem = adapter.dataList[viewHolder.adapterPosition]
+                todoViewModel.deleteItem(deletedItem)
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+                //Restore
+                restoreDeletedData(viewHolder.itemView, deletedItem, viewHolder.adapterPosition)
+
+            }
+        }
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+    }
+
+    private fun restoreDeletedData(view: View, deletedItem: ToDoData, position: Int){
+        val snackbar = Snackbar.make(
+            view, "Deleted '${deletedItem.title}",
+            Snackbar.LENGTH_LONG
+        )
+        snackbar.setAction("Undo"){
+            todoViewModel.insertData(deletedItem)
+            adapter.notifyItemChanged(position)
+        }
+        snackbar.show()
     }
 
 
@@ -82,6 +115,8 @@ class ListFragment : Fragment() {
         builder.setMessage("Are you sure want to delete EVERYTHING?")
         builder.show()
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

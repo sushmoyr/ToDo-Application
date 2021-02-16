@@ -20,18 +20,20 @@
             android:id="@+id/current_title_et"
             android:layout_width="0dp"
             android:layout_height="60dp"
+            android:autofillHints="@string/title"
             android:background="@drawable/custom_input"
-            android:text="@{args.currentItem.title}"
             android:ems="10"
+            android:fontFamily="@font/roboto"
             android:hint="@string/title"
             android:inputType="textPersonName"
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
+            android:text="@{args.currentItem.title}"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:autofillHints="@string/title" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
             android:id="@+id/current_priorities_spinner"
@@ -53,21 +55,23 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:text="@{args.currentItem.description}"
+            android:autofillHints="@string/description"
             android:background="@drawable/custom_input"
             android:ems="10"
+            android:fontFamily="@font/roboto"
             android:gravity="top|start"
             android:hint="@string/description"
             android:inputType="textMultiLine"
             android:paddingStart="24dp"
             android:paddingTop="16dp"
             android:paddingEnd="24dp"
+            android:text="@{args.currentItem.description}"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner"
-            android:autofillHints="@string/description" />
+            app:layout_constraintTop_toBottomOf="@+id/current_priorities_spinner" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

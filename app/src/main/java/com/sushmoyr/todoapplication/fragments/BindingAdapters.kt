@@ -3,12 +3,15 @@ package com.sushmoyr.todoapplication.fragments
 import android.view.View
 import android.widget.Spinner
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.sushmoyr.todoapplication.R
 import com.sushmoyr.todoapplication.data.model.Priority
+import com.sushmoyr.todoapplication.data.model.ToDoData
+import com.sushmoyr.todoapplication.fragments.list.ListFragmentDirections
 
 class BindingAdapters {
 
@@ -53,6 +56,15 @@ class BindingAdapters {
                 Priority.HIGH -> {view.setCardBackgroundColor(view.context.getColor(R.color.red))}
                 Priority.MEDIUM -> {view.setCardBackgroundColor(view.context.getColor(R.color.yellow))}
                 Priority.LOW -> {view.setCardBackgroundColor(view.context.getColor(R.color.green))}
+            }
+        }
+
+        @BindingAdapter("android:sendDataToUpdateFragment")
+        @JvmStatic
+        fun sendDataToUpdateFragment(view: ConstraintLayout, currentItem: ToDoData){
+            view.setOnClickListener {
+                val action = ListFragmentDirections.actionListFragmentToUpdateFragment(currentItem)
+                view.findNavController().navigate(action)
             }
         }
     }
