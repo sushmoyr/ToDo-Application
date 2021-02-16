@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -17,8 +18,9 @@ import com.sushmoyr.todoapplication.data.viewmodel.ToDoViewModel
 import com.sushmoyr.todoapplication.databinding.FragmentListBinding
 import com.sushmoyr.todoapplication.fragments.list.adapter.ListAdapter
 import com.sushmoyr.todoapplication.fragments.SharedViewModel
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private val adapter: ListAdapter by lazy {
         ListAdapter()
@@ -58,6 +60,9 @@ class ListFragment : Fragment() {
         val recyclerView = binding.recyclerView
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.itemAnimator = SlideInUpAnimator().apply {
+            addDuration = 300
+        }
 
         swipeToDelete(recyclerView)
     }
@@ -93,6 +98,12 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_list, menu)
+
+        val search = menu.findItem(R.id.menu_search)
+        val searchView = search.actionView as? SearchView
+
+        searchView?.isSubmitButtonEnabled = false
+        searchView?.setOnQueryTextListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -117,6 +128,29 @@ class ListFragment : Fragment() {
     }
 
 
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if(query != null){
+            searchDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchDatabase(query: String) {
+        val searchQuery = "%$query%"
+
+        todoViewModel.searchDatabase(searchQuery).observe(this, {list->
+            list?.let {
+                adapter.setData(it)
+            }
+        })
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        if(query!=null){
+            searchDatabase(query)
+        }
+        return true
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

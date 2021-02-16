@@ -12,12 +12,12 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="16dp"
-        android:focusable="true"
-        android:clickable="true"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/row_background"
@@ -32,14 +32,14 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/indicator"
-                app:cardElevation="0dp"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:parsePriorityColor="@{todoData.priority}"
                 app:cardBackgroundColor="@color/teal_200"
                 app:cardCornerRadius="100dp"
-                android:parsePriorityColor="@{todoData.priority}"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
